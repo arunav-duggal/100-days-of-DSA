@@ -1,11 +1,15 @@
-def fib(n):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    
-    else:
-        return fib(n - 1) + fib(n - 2)
+#include <stdio.h>
 
-n = int(input("Enter a number: "))
-print(fib(n))
+int fib(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return fib(n - 1) + fib(n - 2);
+}
+
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    printf("%d\n", fib(n));
+    return 0;
+}
