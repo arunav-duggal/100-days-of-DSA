@@ -1,48 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-struct Node {
+struct Node 
+{
     int data;
     struct Node* next;
     struct Node* prev;
 };
-
-struct Deque {
+struct Deque 
+{
     struct Node* front;
     struct Node* rear;
 };
-
-void initDeque(struct Deque* dq) {
+void initDeque(struct Deque* dq) 
+{
     dq->front = dq->rear = NULL;
 }
-
-void push_front(struct Deque* dq, int value) {
+void push_front(struct Deque* dq, int value) 
+{
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = value;
     newNode->next = dq->front;
     newNode->prev = NULL;
-    if (dq->front == NULL) {
+    if (dq->front == NULL) 
+    {
         dq->front = dq->rear = newNode;
-    } else {
+    } 
+    else 
+    {
         dq->front->prev = newNode;
         dq->front = newNode;
     }
 }
-
-void push_back(struct Deque* dq, int value) {
+void push_back(struct Deque* dq, int value) 
+{
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = value;
     newNode->next = NULL;
     newNode->prev = dq->rear;
-    if (dq->rear == NULL) {
+    if (dq->rear == NULL) 
+    {
         dq->front = dq->rear = newNode;
-    } else {
+    } else 
+    {
         dq->rear->next = newNode;
         dq->rear = newNode;
     }
 }
 
-void pop_front(struct Deque* dq) {
+void pop_front(struct Deque* dq) 
+{
     if (dq->front == NULL) return;
     struct Node* temp = dq->front;
     dq->front = dq->front->next;
@@ -50,8 +56,8 @@ void pop_front(struct Deque* dq) {
     else dq->front->prev = NULL;
     free(temp);
 }
-
-void pop_back(struct Deque* dq) {
+void pop_back(struct Deque* dq) 
+{
     if (dq->rear == NULL) return;
     struct Node* temp = dq->rear;
     dq->rear = dq->rear->prev;
@@ -59,16 +65,18 @@ void pop_back(struct Deque* dq) {
     else dq->rear->next = NULL;
     free(temp);
 }
-
-int front(struct Deque* dq) {
+int front(struct Deque* dq) 
+{
     return (dq->front != NULL) ? dq->front->data : -1;
 }
 
-int back(struct Deque* dq) {
+int back(struct Deque* dq) 
+{
     return (dq->rear != NULL) ? dq->rear->data : -1;
 }
 
-int main() {
+int main() 
+{
     struct Deque dq;
     initDeque(&dq);
     push_back(&dq, 10);
