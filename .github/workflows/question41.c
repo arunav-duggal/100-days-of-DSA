@@ -1,42 +1,72 @@
 #include <stdio.h>
-#define NODES 4
-void initMatrix(int adjMatrix[NODES][NODES]) 
-{
-    for (int i = 0; i < NODES; i++) 
-    {
-        for (int j = 0; j < NODES; j++) 
-        {
-            adjMatrix[i][j] = 0;
-        }
-    }
+#include <stdlib.h>
+#include <string.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Queue structure to keep track of front and rear
+struct Queue {
+    struct Node *front, *rear;
+};
+
+// Function to create a new node
+struct Node* newNode(int k) {
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = k;
+    temp->next = NULL;
+    return temp;
 }
 
-void addEdge(int adjMatrix[NODES][NODES], int u, int v) 
-{
-    adjMatrix[u][v] = 1;
-    adjMatrix[v][u] = 1;
+// Enqueue: Add element to the end (rear)
+void enqueue(struct Queue* q, int k) {
+    struct Node* temp = newNode(k);
+    if (q->rear == NULL) {
+        q->front = q->rear = temp;
+        return;
+    }
+    q->rear->next = temp;
+    q->rear = temp;
 }
 
-void printMatrix(int adjMatrix[NODES][NODES]) 
-{
-    printf("Adjacency Matrix (4 Nodes):\n\n");
-    for (int i = 0; i < NODES; i++) 
-    {
-        for (int j = 0; j < NODES; j++) 
-        {
-            printf("%d ", adjMatrix[i][j]);
-        }
-        printf("\n");
+// Dequeue: Remove element from the start (front)
+int dequeue(struct Queue* q) {
+    if (q->front == NULL) {
+        return -1;
     }
+    struct Node* temp = q->front;
+    int data = temp->data;
+    q->front = q->front->next;
+
+    if (q->front == NULL) {
+        q->rear = NULL;
+    }
+    free(temp);
+    return data;
 }
-int main() 
-{
-    int adjMatrix[NODES][NODES];
-    initMatrix(adjMatrix);
-    addEdge(adjMatrix, 0, 1);
-    addEdge(adjMatrix, 0, 2);
-    addEdge(adjMatrix, 1, 3);
-    addEdge(adjMatrix, 2, 3);
-    printMatrix(adjMatrix);
+
+int main() {
+    struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
+    q->front = q->rear = NULL;
+
+    int n;
+    if (scanf("%d", &n) != 1) return 0;
+
+    for (int i = 0; i < n; i++) {
+        char op[20];
+        scanf("%s", op);
+
+        if (strcmp(op, "enqueue") == 0) {
+            int val;
+            scanf("%d", &val);
+            enqueue(q, val);
+        } else if (strcmp(op, "dequeue") == 0) {
+            printf("%d\n", dequeue(q));
+        }
+    }
+
     return 0;
 }
