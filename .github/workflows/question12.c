@@ -1,20 +1,36 @@
+#include <stdio.h>
 
-m, n = map(int, input().split())
+int main() {
+    int n, i, j, isSymmetric = 1;
+    printf("Enter the order of the square matrix: ");
+    scanf("%d", &n);
+    int matrix[n][n];
+    printf("Enter elements of the matrix:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    for (i = 0; i < n; i++) 
+    {
+        for (j = 0; j < n; j++) 
+        {
+            if (matrix[i][j] != matrix[j][i]) 
+            {
+                isSymmetric = 0;
+                break; 
+            }
+        }
+        if (!isSymmetric) break;
+    }
 
-matrix = []
-for _ in range(m):
-    matrix.append(list(map(int, input().split())))
+    if (isSymmetric) 
+    {
+        printf("\nThe matrix is symmetric.\n");
+    } else 
+    {
+        printf("\nThe matrix is NOT symmetric.\n");
+    }
 
-def is_symmetric(mat, rows, cols):
-    if rows != cols:
-        return False
-    for i in range(rows):
-        for j in range(i + 1, cols): 
-            if mat[i][j] != mat[j][i]:
-                return False
-    return True
-
-if is_symmetric(matrix, m, n):
-    print("Symmetric Matrix")
-else:
-    print("Not a Symmetric Matrix")
+    return 0;
+}
