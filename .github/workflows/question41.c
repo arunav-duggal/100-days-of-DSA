@@ -1,27 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// Node structure
 struct Node {
     int data;
     struct Node* next;
 };
-
-// Queue structure to keep track of front and rear
 struct Queue {
     struct Node *front, *rear;
 };
-
-// Function to create a new node
 struct Node* newNode(int k) {
     struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
     temp->data = k;
     temp->next = NULL;
     return temp;
 }
-
-// Enqueue: Add element to the end (rear)
 void enqueue(struct Queue* q, int k) {
     struct Node* temp = newNode(k);
     if (q->rear == NULL) {
@@ -31,8 +23,6 @@ void enqueue(struct Queue* q, int k) {
     q->rear->next = temp;
     q->rear = temp;
 }
-
-// Dequeue: Remove element from the start (front)
 int dequeue(struct Queue* q) {
     if (q->front == NULL) {
         return -1;
